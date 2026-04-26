@@ -1,0 +1,19 @@
+[
+    {
+        "id": 1,
+        "task": "hello",
+        "done": true
+    },
+    {
+        "id": 2,
+        "task": "Learn PHP",
+        "done": true,
+        "priority": "high"
+    },
+    {
+        "id": 3,
+        "task": "php",
+        "done": false,
+        "priority": "high"
+    }
+]
