@@ -27,7 +27,7 @@ if ($command === "add") {
 
     saveTasks($tasks);
 
-    echo "✅ Task added!\n";
+    echo " Task added!\n";
 }
 
 if ($command === "list") {
@@ -59,7 +59,7 @@ if ($command === "delete") {
 
     saveTasks($tasks);
 
-    echo "🗑️ Task deleted!\n";
+    echo " Task deleted!\n";
 }
 
 if ($command === "done") {
@@ -73,14 +73,14 @@ if ($command === "done") {
 
     saveTasks($tasks);
 
-    echo "✅ Task marked as done!\n";
+    echo " Task marked as done!\n";
 }
 
 if ($command === "search") {
     $tasks = loadTasks();
 
     if (!$argument) {
-        echo "❌ Please provide a search keyword\n";
+        echo " Please provide a search keyword\n";
         exit;
     }
 
