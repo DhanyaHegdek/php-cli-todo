@@ -12,8 +12,11 @@ A simple command-line to-do manager built with core PHP.
 ## Usage
 
 ```bash
-php todo.php add "Learn PHP"
+
+php todo.php add "Learn PHP" 2026-05-01
+php todo.php add "Finish project"
 php todo.php list
 php todo.php done 1
 php todo.php delete 1
+php todo.php clear
 ```

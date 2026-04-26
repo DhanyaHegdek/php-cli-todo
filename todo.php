@@ -16,13 +16,19 @@ function saveTasks($tasks) {
 }
 
 if ($command === "add") {
+
+    if (!$argument || trim($argument) === "") {
+        echo " Task cannot be empty\n";
+        exit;
+    }
     $tasks = loadTasks();
 
     $tasks[] = [
         "id" => count($tasks) + 1,
         "task" => $argument,
         "done" => false,
-        "priority" => "high"
+        "priority" => "high",
+        "due_date" => $dueDate
     ];
 
     saveTasks($tasks);
@@ -39,7 +45,16 @@ if ($command === "list") {
     }
 
     foreach ($tasks as $task) {
-        echo $task['id'] . ". " . $task['task'] . "\n";
+        $status = $task['done'] ? "✓" : " ";
+        $due = $task['due_date'] ? " (Due: {$task['due_date']})" : "";
+
+        echo "[{$status}] {$task['id']}. {$task['task']}{$due}\n";
+    }
+
+    $today = date("Y-m-d");
+
+    if ($task['due_date'] && $task['due_date'] < $today && !$task['done']) {
+        echo "⚠️ ";
     }
 }
 
@@ -97,4 +112,24 @@ if ($command === "search") {
         $status = $task['done'] ? "✓" : " ";
         echo "[{$status}] " . $task['id'] . ". " . $task['task'] . "\n";
     }
+}
+
+if ($command === "clear") {
+    $tasks = loadTasks();
+
+    // Keep only tasks that are NOT done
+    $tasks = array_filter($tasks, function($task) {
+        return $task['done'] === false;
+    });
+
+    // Reindex + reset IDs
+    $tasks = array_values($tasks);
+
+    foreach ($tasks as $index => $task) {
+        $tasks[$index]['id'] = $index + 1;
+    }
+
+    saveTasks($tasks);
+
+    echo " Completed tasks cleared!\n";
 }
