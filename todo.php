@@ -21,7 +21,8 @@ if ($command === "add") {
     $tasks[] = [
         "id" => count($tasks) + 1,
         "task" => $argument,
-        "done" => false
+        "done" => false,
+        "priority" => "high"
     ];
 
     saveTasks($tasks);
@@ -73,4 +74,27 @@ if ($command === "done") {
     saveTasks($tasks);
 
     echo "✅ Task marked as done!\n";
+}
+
+if ($command === "search") {
+    $tasks = loadTasks();
+
+    if (!$argument) {
+        echo "❌ Please provide a search keyword\n";
+        exit;
+    }
+
+    $results = array_filter($tasks, function($task) use ($argument) {
+        return stripos($task['task'], $argument) !== false;
+    });
+
+    if (empty($results)) {
+        echo "No matching tasks found.\n";
+        exit;
+    }
+
+    foreach ($results as $task) {
+        $status = $task['done'] ? "✓" : " ";
+        echo "[{$status}] " . $task['id'] . ". " . $task['task'] . "\n";
+    }
 }
